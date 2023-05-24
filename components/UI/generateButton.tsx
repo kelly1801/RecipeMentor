@@ -4,16 +4,16 @@ export default  function Button() {
 
   const handleSubmit = async () => {
     
-    const recipeId = '646e6b722d6bf60d871b26f4'
+    const ingredients = 'caviar, sugar, oil'
 
     try {
     
-      const resp = await fetch("/api/recipes/deleteRecipe", {
+      const resp = await fetch("/api/recipes/generateRecipe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ recipeId }),
+        body: JSON.stringify({ ingredients }),
       });
       
 

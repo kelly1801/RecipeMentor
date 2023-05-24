@@ -32,7 +32,7 @@ export default withApiAuthRequired(async function handler(req, res) {
     },
     {
       role: "user",
-      content: `Write a long and detailed recipe with a title only with the following comma-separated ingredients ${ingredients}, The content should be formatted in HTML and limited to the following HTML tags: p, h2, h3, h4, h5, h6, strong, li, ol, ul, i, dont include metatag like the doctype, meta, doctype or the html tag.`,
+      content: `Write a long and detailed recipe with the following comma-separated ingredients ${ingredients}, The content should be formatted in HTML and limited to the following HTML tags: p, h2, h3, h4, h5, h6, strong, li, ol, ul, i, dont include metatag like the doctype, meta, doctype or the html tag., the ingredients, instructions and aditional steps, and descrption of the recipe should be all in a separated div each one with a className attribute not class, the whole recipe should be wrapped in a section tag with the className recipe, that describes the content, the ingredients div should have an ingredients className attribute and so on`,
     },
   ];
 
@@ -42,7 +42,26 @@ export default withApiAuthRequired(async function handler(req, res) {
     messages: commonMessages,
   });
 
+
   const recipeContent = recipeResponse.data.choices[0]?.message?.content || "";
+
+  const promptImgResponse = await openai.createChatCompletion({
+    model: "gpt-3.5-turbo",
+    temperature: 0,
+    messages: [
+      ...commonMessages,
+      {
+        role: "assistant",
+        content: recipeContent,
+      },
+      {
+        role: "user",
+        content: "Generate a prompt that describes the recipe to generate an image based on it",
+      },
+    ],
+  });
+
+  const prompt = promptImgResponse.data.choices[0]?.message?.content || "";
 
   // Check if the user exists
  
@@ -64,6 +83,14 @@ export default withApiAuthRequired(async function handler(req, res) {
     { $inc: { savedRecipes: 1 } }
   );
 
+  const imgResponse = await openai.createImage({
+    prompt,
+    n: 1,
+    size: "1024x1024",
+  });
+
+  const image_url = imgResponse.data.data[0].url;
+
   // Retrieve the updated user document
   const updatedUserProfile = await usersCollection.findOne({
     auth0Id: session?.user.sub,
@@ -75,6 +102,8 @@ export default withApiAuthRequired(async function handler(req, res) {
     ingredients,
     created: new Date(),
     userId: updatedUserProfile?._id,
+    image_url,
+    prompt
   });
 
   res.status(200).json({ recipeId: recipe.insertedId });

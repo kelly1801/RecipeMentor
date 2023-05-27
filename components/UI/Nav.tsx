@@ -4,7 +4,7 @@ import Image from "next/image";
 const Nav = () => {
   const { user } = useUser();
   return (
-    <nav className="bg-orange-50 flex justify-between content-center  p-4 shadow-sm shadow-slate-200 font-bold text-orange-300">
+    <nav className="bg-orange-50 z-10 flex justify-between content-center  p-4 shadow-sm shadow-slate-200 font-bold text-orange-300">
       <figure className="">
         <Image
           src={"/logo.png"}

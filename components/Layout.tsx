@@ -8,7 +8,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Nav />
-      <main className="bg-orange-100/10 max-h-[calc(100vh-5rem)] h-[calc(100vh-5rem)]">{children}</main>
+      <main className="relative bg-orange-100/10 max-h-[calc(100vh-5rem)] h-[calc(100vh-5rem)]">{children}</main>
     </>
   );
 };

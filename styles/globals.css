@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer base {
+
+
+.recipe h2, h3 {
+  @apply text-2xl text-red-400 text-center my-2
+}  
+ol {
+  @apply list-decimal pl-12
+}
+ .recipe ul {
+  @apply list-disc pl-12
+ }
+ 
+
+ p , li {
+  @apply text-lg
+ }
+
+}
 @layer components {
   .nav-menu {
     @apply flex gap-4 justify-center items-center px-2;
@@ -14,4 +34,19 @@
   .btn {
     @apply bg-orange-400 p-2 rounded-sm text-white hover:bg-orange-500 disabled:bg-orange-200;
   }
+
+  .recipe {
+    @apply flex flex-col p-20 gap-5
+  }
+  /* .description {
+    @apply 
+  }
+  .ingredients {
+    @apply 
+  .instructions {
+    @apply 
+  }
+  .additional-steps {
+    @apply 
+  } */
 }

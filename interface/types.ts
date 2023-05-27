@@ -5,5 +5,6 @@ export interface Recipe {
     created: string,
     userId: string,
     image_url:string,
-    prompt:string
+    prompt:string,
+    title: string
 }

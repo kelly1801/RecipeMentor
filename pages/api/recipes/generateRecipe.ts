@@ -52,6 +52,23 @@ export default withApiAuthRequired(async function handler(req, res) {
 
   const recipeContent = recipeResponse.data.choices[0]?.message?.content || "";
 
+  const recipeTitleResponse = await openai.createChatCompletion({
+    model: "gpt-3.5-turbo",
+    temperature: 0,
+    messages: [
+      ...commonMessages,
+      {
+        role: "assistant",
+        content: recipeContent,
+      },
+      {
+        role: "user",
+        content: "Generate a title that describes the above recipe",
+      },
+    ],
+  });
+
+  const title = recipeTitleResponse.data.choices[0]?.message?.content || "";
   const promptImgResponse = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     temperature: 0,
@@ -94,7 +111,7 @@ export default withApiAuthRequired(async function handler(req, res) {
     size: "1024x1024",
   });
 
-  const openImage = imgResponse.data.data[0].url || ''
+  const openImage = imgResponse.data.data[0].url || "";
 
   const cloudinaryResponse = await cloudinary.uploader.upload(openImage);
   const image_url = cloudinaryResponse.secure_url;
@@ -105,6 +122,7 @@ export default withApiAuthRequired(async function handler(req, res) {
 
   // Insert the recipe document
   const recipe = await recipesCollection.insertOne({
+    title,
     recipeContent,
     ingredients,
     created: new Date(),

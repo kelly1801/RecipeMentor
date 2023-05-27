@@ -39,14 +39,14 @@ ol {
     @apply flex flex-col p-20 gap-5
   }
   /* .description {
-    @apply 
-  }
-  .ingredients {
+    @apply w-fit
+  } */
+  /* .ingredients {
     @apply 
   .instructions {
     @apply 
   }
   .additional-steps {
     @apply 
-  } */
+  }  */
 }

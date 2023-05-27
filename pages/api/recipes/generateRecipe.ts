@@ -1,12 +1,20 @@
 import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from "openai";
 import { useDB } from "@/hooks/useDB";
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export default withApiAuthRequired(async function handler(req, res) {
   const session = await getSession(req, res);
 
-  const { usersCollection, recipesCollection, userProfile } = await useDB(session?.user.sub);
-
+  const { usersCollection, recipesCollection, userProfile } = await useDB(
+    session?.user.sub
+  );
 
   const config = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
@@ -42,7 +50,6 @@ export default withApiAuthRequired(async function handler(req, res) {
     messages: commonMessages,
   });
 
-
   const recipeContent = recipeResponse.data.choices[0]?.message?.content || "";
 
   const promptImgResponse = await openai.createChatCompletion({
@@ -56,15 +63,13 @@ export default withApiAuthRequired(async function handler(req, res) {
       },
       {
         role: "user",
-        content: "Generate a prompt that describes the recipe to generate an image based on it",
+        content:
+          "Generate a prompt that describes the recipe to generate an image based on it",
       },
     ],
   });
 
   const prompt = promptImgResponse.data.choices[0]?.message?.content || "";
-
-  // Check if the user exists
- 
 
   if (!userProfile) {
     // Create a new user document
@@ -89,8 +94,10 @@ export default withApiAuthRequired(async function handler(req, res) {
     size: "1024x1024",
   });
 
-  const image_url = imgResponse.data.data[0].url;
+  const openImage = imgResponse.data.data[0].url || ''
 
+  const cloudinaryResponse = await cloudinary.uploader.upload(openImage);
+  const image_url = cloudinaryResponse.secure_url;
   // Retrieve the updated user document
   const updatedUserProfile = await usersCollection.findOne({
     auth0Id: session?.user.sub,
@@ -103,7 +110,7 @@ export default withApiAuthRequired(async function handler(req, res) {
     created: new Date(),
     userId: updatedUserProfile?._id,
     image_url,
-    prompt
+    prompt,
   });
 
   res.status(200).json({ recipeId: recipe.insertedId });

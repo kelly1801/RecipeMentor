@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import 'animate.css';
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { AppProps } from "next/app";
 

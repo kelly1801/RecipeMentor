@@ -1,63 +1,41 @@
 import { Layout } from "@/components";
-import { useState, SyntheticEvent } from "react";
-import { useRouter } from "next/router";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import Link from "next/link";
+import Image from "next/image";
 export default function Home() {
-  const [{ingredients, loading}, setIngredients] = useState({ingredients: '', loading: false});
-  const router = useRouter()
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value;
-    setIngredients((prevState) => ({ ...prevState, ingredients: value }));
-  };
-  const handleSubmit = async (e: SyntheticEvent) => {
-    e.preventDefault();
-
-    if (!ingredients.trim().length) return;
-
-   setIngredients((prevState) => ({ ...prevState, loading: true }))
-    try {
-      const resp = await fetch("/api/recipes/generateRecipe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ingredients }),
-      });
-
-      const json = await resp.json();
-      if (json?.recipeId) {
-        router.push(`/recipe/${json.recipeId}`);
-      }
-      setIngredients((prevState) => ({ ...prevState, loading: false }))
-
-      console.log(json);
-    } catch (e) {
-      setIngredients((prevState) => ({ ...prevState, loading: false }))
-
-      console.error(e);
-    }
-  };
+  const { user } = useUser();
 
   return (
     <Layout>
-      <section className="h-full w-full mx-auto flex items-center justify-center">
-        <form
-          onSubmit={handleSubmit}
-          className="bg-orange-200/40 flex flex-col gap-5 p-4 w-full mx-40 rounded-md"
-        >
-          <label className="text-center  text-2xl">
-            What ingredients you have?
-          </label>
-          <textarea
-            className="resize-none h-16 p-1"
-            placeholder="put ingredients separated by a comma ex: 'chicken, tomatoes, rice'"
-            value={ingredients}
-            onChange={handleInputChange}
-          />
-          <button disabled={loading} type="submit" className="btn">
+      <section className="h-full w-full py-8 px-24 bg-orange-100/40 flex justify-between">
+        <div className="w-1/2 flex flex-col px-12 gap-4 items-center justify-center">
+          <h1 className="text-4xl text-orange-400 font-bold text-center">
+            Welcome to RecipeMentor, {user?.nickname}
+          </h1>
+
+          <p className="text-lg">
+            RecipeMentor is your personal recipe generator and culinary
+            companion. Are you tired of searching through countless recipes to
+            find something that suits your available ingredients? Look no
+            further! With RecipeMentor, you can effortlessly discover delicious
+            recipes based on the ingredients you have on hand.
+          </p>
+
+          <Link
+            href="recipe/generate"
+            className="btn w-full text-center font-bold"
+          >
             Let's cook
-          </button>
-        </form>
+          </Link>
+        </div>
+
+        <Image
+          className="rounded-full object-cover shadow-md shadow-orange-100"
+          src={"/thinking.webp"}
+          alt="pensative women on a fridge"
+          width={400}
+          height={200}
+        />
       </section>
     </Layout>
   );

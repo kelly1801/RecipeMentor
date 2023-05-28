@@ -11,7 +11,7 @@ const Sidebar = ({ recipes }: SidebarProps) => {
   const { user } = useUser();
   return (
     <aside className="bg-orange-200/70 h-[calc(100vh-4.7rem)] w-3/12 ">
-      <div className="flex flex-col justify-between py-4 px-2 overflow-auto">
+      <div className="flex flex-col justify-between py-4 px-2 gap-2 overflow-auto">
         {recipes.map((recipe) => (
           <Link
             className=" bg-orange-400 text-ellipsis overflow-hidden whitespace-nowrap font-bold text-white p-2 rounded-sm"

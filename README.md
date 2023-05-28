@@ -1,34 +1,57 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+```markdown
+# RecipeMentor
+
+RecipeMentor is a web application that generates recipes based on the ingredients you have. It leverages the power of OpenAI's content generation API to provide creative and unique recipes for users. The app is built with Next.js, TypeScript, Tailwind CSS, and integrates various technologies such as Cloudinary for image storage, Auth0 for authentication, and MongoDB as the database.
+
+
+## Features
+
+- Generate personalized recipes based on available ingredients.
+- User authentication using Auth0.
+- Cloudinary integration for storing recipe images.
+- MongoDB for data persistence.
+- Responsive design with Tailwind CSS.
+- Animated transitions using Animate.css.
+- Integration with OpenAI's content generation API for recipe suggestions.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+- Node.js 
+- MongoDB
+- Cloudinary Account
+- Auth0 Account
+- OpenAI API Key
+
+## Usage
+
+1. Open your web browser and navigate to `https://recipe-mentor-rnu8.vercel.app/`.
+2. Sign up or log in.
+3. Enter the ingredients you have in the provided input field.
+4. Click the "Let's cook" button.
+5. Enjoy cooking delicious meals with RecipeMentor!
+
+## License
+
+[MIT](https://opensource.org/licenses/MIT)
+
+## Acknowledgements
+
+- [Next.js](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Animate.css](https://animate.style/)
+- [Auth0](https://auth0.com/)
+- [MongoDB](https://www.mongodb.com/)
+- [Cloudinary](https://cloudinary.com/)
+- [OpenAI](https://openai.com/)
+- [Font Awesome](https://fontawesome.com/)
+
+## Contact
+
+For any inquiries or questions, feel free to reach out to the project maintainer:
+
+Kelly Chara
+kellyfchara@gmail.com
+
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

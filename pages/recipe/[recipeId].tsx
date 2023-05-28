@@ -5,7 +5,9 @@ import { GetServerSideProps } from "next";
 import { Layout } from "@/components";
 import { ObjectId } from "mongodb";
 import Image from "next/image";
-import Sidebar from "@/components/UI/Sidebar";
+import { Sidebar   } from "@/components/";
+import { useState  } from "react";
+import { useRouter } from "next/router";
 
 interface RecipeDetailsProps {
   recipe: Recipe;
@@ -13,6 +15,24 @@ interface RecipeDetailsProps {
 }
 
 const RecipeDetails = ({ recipe, recipes }: RecipeDetailsProps) => {
+  const [deletion, setDeletion] = useState(false);
+  const router = useRouter();
+  const handleDeletion = async (recipeId: string) => {
+    const resp = await fetch("/api/recipes/deleteRecipe", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ recipeId }),
+    });
+
+    const json = await resp.json();
+    if (json.success) {
+      router.replace("/recipe/generate");
+    }
+    console.log(json);
+    return json;
+  };
   return (
     <Layout>
       <section className="flex h-[calc(100vh-5rem)] max-h-[calc(100vh-5rem)]">
@@ -33,6 +53,29 @@ const RecipeDetails = ({ recipe, recipes }: RecipeDetailsProps) => {
             className="overflow-x-hidden"
             dangerouslySetInnerHTML={{ __html: recipe.recipeContent || "" }}
           ></article>
+
+          <div className="flex gap-2 p-4 ">
+            {deletion ? (
+              <>
+                <button
+                  className="btn-cancel"
+                  onClick={() => setDeletion(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="btn-delete"
+                  onClick={() => handleDeletion(recipe._id)}
+                >
+                  Delete
+                </button>
+              </>
+            ) : (
+              <button className="btn-delete" onClick={() => setDeletion(true)}>
+                Delete
+              </button>
+            )}
+          </div>
         </div>
       </section>
     </Layout>
@@ -52,14 +95,7 @@ export const getServerSideProps: GetServerSideProps = withPageAuthRequired({
       })
       .toArray();
 
-    if (recipes.length === 0) {
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
+    
     if (!recipeId) {
       return {
         redirect: {
@@ -96,5 +132,6 @@ export const getServerSideProps: GetServerSideProps = withPageAuthRequired({
     };
   },
 });
+
 
 export default RecipeDetails;

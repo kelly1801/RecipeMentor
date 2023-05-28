@@ -35,18 +35,14 @@ ol {
     @apply bg-orange-400 p-2 rounded-sm text-white hover:bg-orange-500 disabled:bg-orange-200;
   }
 
+  .btn-delete {
+    @apply w-full bg-red-500 p-2 rounded-sm text-white hover:bg-red-600 font-bold text-center;
+  }
+  .btn-cancel {
+    @apply w-full bg-gray-500 p-2 rounded-sm text-white hover:bg-gray-600 font-bold text-center;
+  }
   .recipe {
     @apply flex flex-col p-20 gap-5
   }
-  /* .description {
-    @apply w-fit
-  } */
-  /* .ingredients {
-    @apply 
-  .instructions {
-    @apply 
-  }
-  .additional-steps {
-    @apply 
-  }  */
+
 }

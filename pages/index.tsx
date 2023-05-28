@@ -7,10 +7,10 @@ export default function Home() {
 
   return (
     <Layout>
-      <section className="h-full w-full py-8 px-24 bg-orange-100/40 flex justify-between">
+      <section className="animate__animated animate__slideInDown h-full w-full py-8 px-24 bg-orange-100/40 flex justify-between">
         <div className="w-1/2 flex flex-col px-12 gap-4 items-center justify-center">
           <h1 className="text-4xl text-orange-400 font-bold text-center">
-            Welcome to RecipeMentor, {user?.nickname}
+            Welcome to RecipeMentor, {user?.name?.split(" ")[0]}
           </h1>
 
           <p className="text-lg">

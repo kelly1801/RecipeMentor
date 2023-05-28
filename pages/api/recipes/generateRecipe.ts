@@ -63,7 +63,7 @@ export default withApiAuthRequired(async function handler(req, res) {
       },
       {
         role: "user",
-        content: "Generate a title that describes the above recipe",
+        content: 'Generate a title that describes the above recipe, just the text without any symbol like "", with a maximun length of 20 chars',
       },
     ],
   });

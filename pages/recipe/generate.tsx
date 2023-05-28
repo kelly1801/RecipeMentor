@@ -1,7 +1,16 @@
 import { Layout } from "@/components";
 import { useState, SyntheticEvent } from "react";
 import { useRouter } from "next/router";
-export default function Home() {
+import { Sidebar   } from "@/components/";
+import { getSession, withPageAuthRequired } from "@auth0/nextjs-auth0";
+import { GetServerSideProps } from "next";
+import { Recipe } from "@/interface/types";
+import { useDB } from "@/hooks/useDB";
+
+interface SidebarProps {
+  recipes: Recipe[];
+}
+export default function Generate({recipes}:SidebarProps) {
   const [{ingredients, loading}, setIngredients] = useState({ingredients: '', loading: false});
   const router = useRouter()
 
@@ -40,10 +49,12 @@ export default function Home() {
 
   return (
     <Layout>
-      <section className="h-full w-full mx-auto flex items-center justify-center">
+      <div className="flex">
+      <Sidebar recipes={recipes}/>
+      <section className="flex justify-center items-center w-full">
         <form
           onSubmit={handleSubmit}
-          className="bg-orange-200/40 flex flex-col gap-5 p-4 w-full mx-40 rounded-md"
+          className="animate__animated animate__slideInDown bg-orange-200/40 mx-40  w-full flex flex-col gap-5 p-4 rounded-md"
         >
           <label className="text-center  text-2xl">
             What ingredients you have?
@@ -59,6 +70,34 @@ export default function Home() {
           </button>
         </form>
       </section>
+      </div>
+      
     </Layout>
   );
 }
+
+
+export const getServerSideProps: GetServerSideProps = withPageAuthRequired({
+  async getServerSideProps(ctx) {
+    const session = await getSession(ctx.req, ctx.res);
+
+    const { recipesCollection, userProfile } = await useDB(session?.user.sub)
+
+    const recipes = await recipesCollection
+      .find({
+        userId: userProfile?._id,
+      })
+      .toArray();
+
+
+    // Convert the recipe object to a plain JavaScript object
+    const plainRecipes = JSON.parse(JSON.stringify(recipes));
+
+    return {
+      props: {
+        
+        recipes: plainRecipes
+      },
+    };
+  },
+});

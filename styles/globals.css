@@ -42,7 +42,7 @@ ol {
     @apply w-full bg-gray-500 p-2 rounded-sm text-white hover:bg-gray-600 font-bold text-center;
   }
   .recipe {
-    @apply flex flex-col p-20 gap-5
+    @apply flex flex-col p-5 md:p-20 gap-5 h-full max-h-full;
   }
 
 }

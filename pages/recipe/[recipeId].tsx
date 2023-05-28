@@ -4,10 +4,12 @@ import { getSession, withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { GetServerSideProps } from "next";
 import { Layout } from "@/components";
 import { ObjectId } from "mongodb";
-import Image from "next/image";
 import { Sidebar } from "@/components/";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
+import RecipeContext from "@/context/recipeContext";
+import Overlay from "../../components/UI/Overlay";
 
 interface RecipeDetailsProps {
   recipe: Recipe;
@@ -16,6 +18,8 @@ interface RecipeDetailsProps {
 
 const RecipeDetails = ({ recipe, recipes }: RecipeDetailsProps) => {
   const [deletion, setDeletion] = useState(false);
+  const { isVisible } = useContext(RecipeContext);
+
   const router = useRouter();
   const handleDeletion = async (recipeId: string) => {
     const resp = await fetch("/api/recipes/deleteRecipe", {
@@ -35,11 +39,13 @@ const RecipeDetails = ({ recipe, recipes }: RecipeDetailsProps) => {
   };
   return (
     <Layout>
-      <section className="flex h-[calc(100vh-5rem)] max-h-[calc(100vh-5rem)]">
+      <section className="flex h-full max-h-full">
         <Sidebar recipes={recipes} />
 
+        {isVisible && <Overlay />}
+
         <div className="overflow-auto">
-          <figure className="w-full h-3/5  bg-orange-200 mx-auto flex">
+          <figure className="w-full  h-1/5 md:h-3/5  bg-orange-200 mx-auto flex">
             <Image
               className="w-full object-cover "
               src={recipe.image_url}

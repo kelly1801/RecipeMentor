@@ -1,16 +1,20 @@
-import { Layout } from "@/components";
-import { useState, SyntheticEvent } from "react";
+import { Layout, Overlay } from "@/components";
+import { useState, SyntheticEvent, useContext } from "react";
 import { useRouter } from "next/router";
 import { Sidebar } from "@/components/";
 import { getSession, withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { GetServerSideProps } from "next";
 import { Recipe } from "@/interface/types";
 import { getDB } from "@/utils/getDB";
+import { DotWave } from "@uiball/loaders";
+import RecipeContext from "@/context/recipeContext";
 
 interface SidebarProps {
   recipes: Recipe[];
 }
 export default function Generate({ recipes }: SidebarProps) {
+  const { isVisible } = useContext(RecipeContext);
+
   const [{ ingredients, loading }, setIngredients] = useState({
     ingredients: "",
     loading: false,
@@ -21,6 +25,8 @@ export default function Generate({ recipes }: SidebarProps) {
     const value = e.target.value;
     setIngredients((prevState) => ({ ...prevState, ingredients: value }));
   };
+
+  
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
@@ -40,9 +46,6 @@ export default function Generate({ recipes }: SidebarProps) {
       if (json?.recipeId) {
         router.push(`/recipe/${json.recipeId}`);
       }
-      setIngredients((prevState) => ({ ...prevState, loading: false }));
-
-      console.log(json);
     } catch (e) {
       setIngredients((prevState) => ({ ...prevState, loading: false }));
 
@@ -54,24 +57,31 @@ export default function Generate({ recipes }: SidebarProps) {
     <Layout>
       <div className="flex">
         <Sidebar recipes={recipes} />
+        {isVisible && <Overlay />}
         <section className="flex justify-center items-center w-full">
-          <form
-            onSubmit={handleSubmit}
-            className="animate__animated animate__slideInDown bg-orange-200/40 mx-40  w-full flex flex-col gap-5 p-4 rounded-md"
-          >
-            <label className="text-center  text-2xl">
-              What ingredients you have?
-            </label>
-            <textarea
-              className="resize-none h-16 p-1"
-              placeholder="put ingredients separated by a comma ex: 'chicken, tomatoes, rice'"
-              value={ingredients}
-              onChange={handleInputChange}
-            />
-            <button disabled={loading} type="submit" className="btn">
-              Let&apos;s cook
-            </button>
-          </form>
+          {loading ? (
+            <div className="mt-40 md:mt-0">
+              <DotWave size={100} color="#231F20" />
+            </div>
+          ) : (
+            <form
+              onSubmit={handleSubmit}
+              className="animate__animated animate__slideInDown bg-orange-200/40  mx-5  lg:mt-0 md:mx-40 w-full flex flex-col gap-5 p-8 md:p-4 rounded-md"
+            >
+              <label className="text-center  text-2xl">
+                What ingredients you have?
+              </label>
+              <textarea
+                className="resize-none h-32 p-1"
+                placeholder="put ingredients separated by a comma ex: 'chicken, tomatoes, rice'"
+                value={ingredients}
+                onChange={handleInputChange}
+              />
+              <button disabled={loading} type="submit" className="btn">
+                Let&apos;s cook
+              </button>
+            </form>
+          )}
         </section>
       </div>
     </Layout>

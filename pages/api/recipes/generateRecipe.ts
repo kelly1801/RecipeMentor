@@ -1,6 +1,6 @@
 import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from "openai";
-import { useDB } from "@/hooks/useDB";
+import { getDB } from "@/utils/getDB";
 import { v2 as cloudinary } from "cloudinary";
 
 cloudinary.config({
@@ -12,7 +12,7 @@ cloudinary.config({
 export default withApiAuthRequired(async function handler(req, res) {
   const session = await getSession(req, res);
 
-  const { usersCollection, recipesCollection, userProfile } = await useDB(
+  const { usersCollection, recipesCollection, userProfile } = await getDB(
     session?.user.sub
   );
 
@@ -63,7 +63,8 @@ export default withApiAuthRequired(async function handler(req, res) {
       },
       {
         role: "user",
-        content: 'Generate a title that describes the above recipe, just the text without any symbol like "", with a maximun length of 20 chars',
+        content:
+          'Generate a title that describes the above recipe, just the text without any symbol like "", with a maximun length of 20 chars',
       },
     ],
   });

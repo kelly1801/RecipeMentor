@@ -1,6 +1,6 @@
 import connectDB from "../lib/connect-db";
 
-export const useDB = async (auth0Id: string) => {
+export const getDB = async (auth0Id: string) => {
   const client = await connectDB
   const db = client.db('RecipeMentor')
   const usersCollection = db.collection("users")

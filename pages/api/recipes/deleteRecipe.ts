@@ -1,10 +1,10 @@
 import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { ObjectId } from "mongodb";
-import { useDB } from "@/hooks/useDB";
+import { getDB } from "@/utils/getDB";
 
 export default withApiAuthRequired(async function handler(req, res) {
   const session = await getSession(req, res);
-  const { userProfile, recipesCollection } = await useDB(session?.user.sub);
+  const { userProfile, recipesCollection } = await getDB(session?.user.sub);
   try {
     const { recipeId } = req.body;
     await recipesCollection.deleteOne({

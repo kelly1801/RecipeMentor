@@ -1,10 +1,12 @@
 import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
-import { useDB } from "@/hooks/useDB";
+import { getDB } from "@/utils/getDB";
 
 export default withApiAuthRequired(async function handler(req, res) {
   const session = await getSession(req, res);
 
-  const { userProfile , usersCollection, recipesCollection} = await useDB(session?.user.sub)
+  const { userProfile, usersCollection, recipesCollection } = await getDB(
+    session?.user.sub
+  );
   try {
     const recipes = await recipesCollection
       .find({

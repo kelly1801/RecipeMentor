@@ -1,12 +1,12 @@
-import { useDB } from "@/hooks/useDB";
+import { getDB } from "@/utils/getDB";
 import { Recipe } from "@/interface/types";
 import { getSession, withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { GetServerSideProps } from "next";
 import { Layout } from "@/components";
 import { ObjectId } from "mongodb";
 import Image from "next/image";
-import { Sidebar   } from "@/components/";
-import { useState  } from "react";
+import { Sidebar } from "@/components/";
+import { useState } from "react";
 import { useRouter } from "next/router";
 
 interface RecipeDetailsProps {
@@ -87,7 +87,7 @@ export const getServerSideProps: GetServerSideProps = withPageAuthRequired({
     const { recipeId } = ctx.query;
     const session = await getSession(ctx.req, ctx.res);
 
-    const { recipesCollection, userProfile } = await useDB(session?.user.sub);
+    const { recipesCollection, userProfile } = await getDB(session?.user.sub);
 
     const recipes = await recipesCollection
       .find({
@@ -95,7 +95,6 @@ export const getServerSideProps: GetServerSideProps = withPageAuthRequired({
       })
       .toArray();
 
-    
     if (!recipeId) {
       return {
         redirect: {
@@ -132,6 +131,5 @@ export const getServerSideProps: GetServerSideProps = withPageAuthRequired({
     };
   },
 });
-
 
 export default RecipeDetails;

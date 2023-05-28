@@ -25,7 +25,7 @@ export default function Home() {
             href="recipe/generate"
             className="btn w-full text-center font-bold"
           >
-            Let's cook
+            Let&apos;s cook
           </Link>
         </div>
 

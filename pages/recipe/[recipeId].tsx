@@ -39,10 +39,9 @@ const RecipeDetails = ({ recipe, recipes }: RecipeDetailsProps) => {
   };
   return (
     <Layout>
-      <section className="flex h-full max-h-full">
+      <section className="flex h-screen max-h-full">
         <Sidebar recipes={recipes} />
 
-        {isVisible && <Overlay />}
 
         <div className="overflow-auto">
           <figure className="w-full  h-1/5 md:h-3/5  bg-orange-200 mx-auto flex">

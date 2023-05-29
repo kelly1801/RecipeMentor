@@ -14,7 +14,7 @@ export default function Home() {
             Welcome to RecipeMentor, {user?.name?.split(" ")[0]}
           </h1>
 
-          <p className="text-lg ">
+          <p className="text-lg text-center md:text-left ">
             RecipeMentor is your personal recipe generator and culinary
             companion. Are you tired of searching through countless recipes to
             find something that suits your available ingredients? Look no
@@ -31,7 +31,7 @@ export default function Home() {
         </div>
 
         <Image
-          className="rounded-2xl lg:rounded-full md:hidden object-cover shadow-md shadow-orange-100"
+          className="rounded-2xl lg:rounded-full object-cover shadow-md shadow-orange-100"
           src={"/thinking.webp"}
           alt="pensative women on a fridge"
           width={400}

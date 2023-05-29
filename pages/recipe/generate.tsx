@@ -26,7 +26,7 @@ export default function Generate({ recipes }: SidebarProps) {
     setIngredients((prevState) => ({ ...prevState, ingredients: value }));
   };
 
-  
+
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
@@ -57,8 +57,8 @@ export default function Generate({ recipes }: SidebarProps) {
     <Layout>
       <div className="flex">
         <Sidebar recipes={recipes} />
-        {isVisible && <Overlay />}
-        <section className="flex justify-center items-center w-full">
+        
+        <section className="flex justify-center items-center mx-auto">
           {loading ? (
             <div className="mt-40 md:mt-0">
               <DotWave size={100} color="#231F20" />
@@ -66,7 +66,7 @@ export default function Generate({ recipes }: SidebarProps) {
           ) : (
             <form
               onSubmit={handleSubmit}
-              className="animate__animated animate__slideInDown bg-orange-200/40  mx-5  lg:mt-0 md:mx-40 w-full flex flex-col gap-5 p-8 md:p-4 rounded-md"
+              className="animate__animated animate__slideInDown bg-orange-200/40 w-full mx-4 lg:mx-0 flex flex-col gap-5 p-8 md:p-4 rounded-md"
             >
               <label className="text-center  text-2xl">
                 What ingredients you have?

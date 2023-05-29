@@ -14,9 +14,10 @@ const Layout = ({ children, recipes }: LayoutProps) => {
   return (
     <>
       <Nav />
-      <main className="bg-orange-100/10 max-h-screen h-screen xl:h-[calc(100vh-5rem)]">{children}</main>
+      <main className="bg-orange-100/10 h-full lg:h-screen lg:max-h-[calc(100vh-5rem)] overflow-hidden">{children}</main>
     </>
   );
 };
+
 
 export default Layout

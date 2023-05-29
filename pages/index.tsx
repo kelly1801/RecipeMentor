@@ -29,13 +29,12 @@ export default function Home() {
             Let&apos;s cook
           </Link>
         </div>
-
         <Image
-          className="rounded-2xl lg:rounded-full object-cover shadow-md shadow-orange-100"
+          className="hidden lg:block rounded-2xl lg:rounded-full shadow-md shadow-orange-100"
           src={"/thinking.webp"}
           alt="pensative women on a fridge"
-          width={400}
-          height={400}
+          width={450}
+          height={450}
         />
       </section>
     </Layout>

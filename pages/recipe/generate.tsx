@@ -53,7 +53,7 @@ export default function Generate({ recipes }: SidebarProps) {
 
   return (
     <Layout>
-      <div className="flex">
+      <div className="flex h-full">
         <Sidebar recipes={recipes} />
 
         <section className="flex justify-center items-center mx-auto">

@@ -1,6 +1,9 @@
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronRight,
+  faChevronLeft,
+} from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { Recipe } from "@/interface/types";
 
@@ -18,7 +21,7 @@ const Sidebar = ({ recipes }: SidebarProps) => {
   return (
     <>
       {!isVisible ? (
-        <aside className="z-20 bg-orange-200/70 h-[calc(100vh-4.7rem)] max-h-[calc(100vh-4.7rem)] max-w-[8%] flex flex-col justify-between">
+        <aside className=" bg-orange-200/70 h-full max-h-full max-w-[8%] flex flex-col justify-between">
           <FontAwesomeIcon
             icon={faChevronRight}
             onClick={() => showSidebar()}
@@ -26,7 +29,7 @@ const Sidebar = ({ recipes }: SidebarProps) => {
           />
         </aside>
       ) : (
-        <aside className="z-20 w-[1000px] bg-orange-200/70 h-[calc(100vh-4.7rem)] max-h-[calc(100vh-4.7rem)] lg:max-w-[25%] lg:w-[25%] flex flex-col justify-between">
+        <aside className="w-full min-w-full bg-orange-200/70 h-full max-h-full lg:min-w-[25%] lg:max-w-[25%] xl:w-[25%] flex flex-col justify-between ov">
           <div className="flex flex-col justify-between py-4 px-2 gap-2 overflow-auto">
             <FontAwesomeIcon
               icon={faChevronLeft}
@@ -51,7 +54,7 @@ const Sidebar = ({ recipes }: SidebarProps) => {
             )}
           </div>
 
-          <div className="p-2 border-t  border-orange-300">
+          <div className="p-2  border-t   border-orange-300">
             <figure className="flex gap-3 justify-between">
               <Image
                 className="rounded-full"

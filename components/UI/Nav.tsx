@@ -5,7 +5,7 @@ import Link from "next/link";
 const Nav = () => {
   const { user } = useUser();
   return (
-    <nav className="bg-orange-50 z-10 flex justify-between content-center  p-4 shadow-sm shadow-slate-200 font-bold text-orange-300">
+    <nav className="z-50 w-full bg-orange-50 fixed flex justify-between items-center p-4 shadow-sm shadow-slate-200 font-bold text-orange-300">
       <Link href={"/"}>
         <figure>
           <Image

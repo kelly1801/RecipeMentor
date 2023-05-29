@@ -13,7 +13,6 @@ interface SidebarProps {
   recipes: Recipe[];
 }
 export default function Generate({ recipes }: SidebarProps) {
-  const { isVisible } = useContext(RecipeContext);
 
   const [{ ingredients, loading }, setIngredients] = useState({
     ingredients: "",
@@ -26,6 +25,7 @@ export default function Generate({ recipes }: SidebarProps) {
     setIngredients((prevState) => ({ ...prevState, ingredients: value }));
   };
 
+
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
@@ -33,7 +33,7 @@ export default function Generate({ recipes }: SidebarProps) {
 
     setIngredients((prevState) => ({ ...prevState, loading: true }));
     try {
-      const resp = await fetch("/api/recipes/generateRecipe", {
+      const resp = await fetch(`/api/recipes/generateRecipe`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -104,6 +104,7 @@ export const getServerSideProps: GetServerSideProps = withPageAuthRequired({
     return {
       props: {
         recipes: plainRecipes,
+        
       },
     };
   },

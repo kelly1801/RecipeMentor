@@ -18,7 +18,6 @@ interface RecipeDetailsProps {
 
 const RecipeDetails = ({ recipe, recipes }: RecipeDetailsProps) => {
   const [deletion, setDeletion] = useState(false);
-  const { isVisible } = useContext(RecipeContext);
 
   const router = useRouter();
   const handleDeletion = async (recipeId: string) => {
@@ -34,7 +33,6 @@ const RecipeDetails = ({ recipe, recipes }: RecipeDetailsProps) => {
     if (json.success) {
       router.replace("/recipe/generate");
     }
-    console.log(json);
     return json;
   };
   return (

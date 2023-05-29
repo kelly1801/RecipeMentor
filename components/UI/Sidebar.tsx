@@ -26,7 +26,7 @@ const Sidebar = ({ recipes }: SidebarProps) => {
           />
         </aside>
       ) : (
-        <aside className="z-20 w-full bg-orange-200/70 h-[calc(100vh-4.7rem)] max-h-[calc(100vh-4.7rem)] lg:max-w-[25%] lg:w-[25%] flex flex-col justify-between">
+        <aside className="z-20 w-[1000px] bg-orange-200/70 h-[calc(100vh-4.7rem)] max-h-[calc(100vh-4.7rem)] lg:max-w-[25%] lg:w-[25%] flex flex-col justify-between">
           <div className="flex flex-col justify-between py-4 px-2 gap-2 overflow-auto">
             <FontAwesomeIcon
               icon={faChevronLeft}

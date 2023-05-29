@@ -26,7 +26,6 @@ export default function Generate({ recipes }: SidebarProps) {
     setIngredients((prevState) => ({ ...prevState, ingredients: value }));
   };
 
-
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
@@ -47,9 +46,8 @@ export default function Generate({ recipes }: SidebarProps) {
         router.push(`/recipe/${json.recipeId}`);
       }
     } catch (e) {
+      console.error("API request error:", e);
       setIngredients((prevState) => ({ ...prevState, loading: false }));
-
-      console.error(e);
     }
   };
 
@@ -57,7 +55,7 @@ export default function Generate({ recipes }: SidebarProps) {
     <Layout>
       <div className="flex">
         <Sidebar recipes={recipes} />
-        
+
         <section className="flex justify-center items-center mx-auto">
           {loading ? (
             <div className="mt-40 md:mt-0">
